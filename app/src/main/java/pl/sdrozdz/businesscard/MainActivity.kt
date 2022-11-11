@@ -4,11 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,11 +52,12 @@ class MainActivity : ComponentActivity() {
 fun BusinessCard(details: PersonDetails) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 12.dp),
-        verticalArrangement = Arrangement.SpaceEvenly
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Top
     ) {
+        Spacer(modifier = Modifier.fillMaxHeight(0.3f).fillMaxWidth())
         BusinessCardHeader(fullName = "${details.firstName} ${details.lastName}", title = details.title)
+        Spacer(modifier = Modifier.fillMaxHeight(0.6f).fillMaxWidth())
         BusinessCardDetails(phone = details.phone, social = details.social, email = details.email)
     }
 }
@@ -61,8 +66,7 @@ fun BusinessCard(details: PersonDetails) {
 fun BusinessCardHeader(fullName: String, title: String) {
     val image = painterResource(id = R.drawable.android_logo)
     Column(modifier = Modifier
-        .fillMaxWidth()
-        .border(1.dp, Color.Cyan),
+        .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally)  {
 
         Image(
@@ -72,17 +76,56 @@ fun BusinessCardHeader(fullName: String, title: String) {
             contentScale = ContentScale.Fit
         )
         Text(text = fullName, fontSize = 36.sp, fontWeight = FontWeight.Light, color = Color.White)
-        Text(text = title, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF3ddc84))
+        Text(text = title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF3ddc84))
     }
 }
 
 @Composable
 fun BusinessCardDetails(phone: String, social: String, email: String) {
-    Row(modifier = Modifier
+    Column(modifier = Modifier
         .fillMaxWidth()
-        .border(1.dp, Color.Cyan))  {
+        .wrapContentHeight())  {
 
-        Text(text = phone)
+        val rowModifier = Modifier
+            .wrapContentSize(align = Alignment.CenterStart)
+            .padding(start = 36.dp, top = 5.dp, bottom = 5.dp)
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Divider(color = Color.Gray, thickness = 1.dp)
+            Row(
+                modifier = rowModifier,
+            ) {
+                Icon(Icons.Filled.Phone, contentDescription = "Phone", tint = Color(0xFF3ddc84))
+                Text(text = phone, color = Color.White, modifier = Modifier.padding(start = 16.dp))
+            }
+        }
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Divider(color = Color.Gray, thickness = 1.dp)
+            Row(
+                modifier = rowModifier,
+            ) {
+                Icon(Icons.Filled.Share, contentDescription = "Social", tint = Color(0xFF3ddc84))
+                Text(text = social, color = Color.White, modifier = Modifier.padding(start = 16.dp))
+            }
+        }
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Divider(color = Color.Gray, thickness = 1.dp)
+            Row(
+                modifier = rowModifier,
+            ) {
+                Icon(Icons.Filled.Email, contentDescription = "Email", tint = Color(0xFF3ddc84))
+                Text(text = email, color = Color.White, modifier = Modifier.padding(start = 16.dp))
+            }
+        }
+
+
+
+
+
+
+
     }
 }
 
@@ -91,11 +134,11 @@ fun BusinessCardDetails(phone: String, social: String, email: String) {
 fun DefaultPreview() {
     BusinessCardTheme {
         BusinessCard(details = PersonDetails(
-            "Sebastian", "Drożdż",
-            "Sofware Developer",
-            phone = "+48 785 363 004",
-            social = "@sdrozdz",
-            email = "seba987xdc@gmail.com"
+            "Jennifer", "Doe",
+            "Android Developer Extraordinaire",
+            phone = "+11 (123) 444 555 666",
+            social = "@AndroidDev",
+            email = "jen.doe@android.com"
         ))
     }
 }
